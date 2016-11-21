@@ -10,10 +10,23 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table
+
+@NamedQueries({
+    @NamedQuery(query = "Select e from Employee e where e.ename = :name", name = "FIND_EMPLOYEE_BY_NAME"),
+    @NamedQuery(query = "Select e from Employee e", name = "FIND_ALL_EMPLOYEES"),
+    @NamedQuery(query = "Select e from Employee e where e.ename like :nameStart", name = "FIND_EMPLOYEES_BY_NAME_START"),
+    @NamedQuery(query = "Select e from Employee e order by e.salary desc", name = "FIND_EMPLOYEES_BY_DESC_SALARY"),
+    @NamedQuery(query = "Delete from Employee", name = "DELETE_ALL_EMPLOYEES"),
+    @NamedQuery(query = "Select e from Employee e where e.salary between :lowest and :highest", name = "FIND_EMPLOYEES_IN_SALARY_RANGE"),
+    @NamedQuery(query = "Select max(e.salary) from Employee e", name = "FIND_MAX_SALARY"),
+})
+
 public class Employee implements Serializable {
 
     @Id
@@ -22,6 +35,9 @@ public class Employee implements Serializable {
     private String ename;
     private double salary;
     private String deg;
+
+    public Employee() {
+    }
 
     public Employee(String ename, double salary, String deg) {
         this.ename = ename;

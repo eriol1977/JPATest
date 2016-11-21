@@ -8,9 +8,11 @@ package com.mycompany.jpatest.service;
 import com.mycompany.jpatest.entity.Employee;
 import java.io.Closeable;
 import java.io.IOException;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 /**
  *
@@ -45,12 +47,53 @@ public class EmployeeDAO implements Closeable {
         persisted.setDeg(employee.getDeg());
         em.getTransaction().commit();
     }
-    
+
     public void delete(Employee employee) {
         em.getTransaction().begin();
         Employee persisted = find(employee.getEid());
         em.remove(persisted);
         em.getTransaction().commit();
+    }
+
+    public void deleteAll() {
+        em.getTransaction().begin();
+        Query query = em.createNamedQuery("DELETE_ALL_EMPLOYEES");
+        query.executeUpdate();
+        em.getTransaction().commit();
+    }
+
+    public Employee findByName(String name) {
+        Query query = em.createNamedQuery("FIND_EMPLOYEE_BY_NAME");
+        query.setParameter("name", name);
+        return (Employee) query.getSingleResult();
+    }
+
+    public List<Employee> findAllEmployees() {
+        Query query = em.createNamedQuery("FIND_ALL_EMPLOYEES");
+        return query.getResultList();
+    }
+
+    public List<Employee> findInSalaryRange(Double lowest, Double highest) {
+        Query query = em.createNamedQuery("FIND_EMPLOYEES_IN_SALARY_RANGE");
+        query.setParameter("lowest", lowest);
+        query.setParameter("highest", highest);
+        return query.getResultList();
+    }
+
+    public List<Employee> findEmployeesByNameStart(String nameStart) {
+        Query query = em.createNamedQuery("FIND_EMPLOYEES_BY_NAME_START");
+        query.setParameter("nameStart", nameStart + '%');
+        return query.getResultList();
+    }
+
+    public List<Employee> findEmployeesByDescendingSalary() {
+        Query query = em.createNamedQuery("FIND_EMPLOYEES_BY_DESC_SALARY");
+        return query.getResultList();
+    }
+
+    public Double findMaxSalary() {
+        Query query = em.createNamedQuery("FIND_MAX_SALARY");
+        return (Double) query.getSingleResult();
     }
     
     @Override
