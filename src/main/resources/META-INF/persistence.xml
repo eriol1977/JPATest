@@ -3,6 +3,9 @@
   <persistence-unit name="myPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
     <class>com.mycompany.jpatest.entity.Employee</class>
+    <class>com.mycompany.jpatest.entity.singletable.Staff</class>
+    <class>com.mycompany.jpatest.entity.singletable.TeachingStaff</class>
+    <class>com.mycompany.jpatest.entity.singletable.NonTeachingStaff</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://HP-188\SQL2016;databaseName=JPA"/>
       <property name="javax.persistence.jdbc.user" value="sa"/>
