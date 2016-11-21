@@ -6,27 +6,14 @@
 package com.mycompany.jpatest.service;
 
 import com.mycompany.jpatest.entity.Employee;
-import java.io.Closeable;
-import java.io.IOException;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 /**
  *
  * @author f.bertolino
  */
-public class EmployeeDAO implements Closeable {
-
-    private final EntityManagerFactory emfactory;
-    private final EntityManager em;
-
-    public EmployeeDAO() {
-        emfactory = Persistence.createEntityManagerFactory("myPU");
-        em = emfactory.createEntityManager();
-    }
+public class EmployeeDAO extends AbstractDAO {
 
     public int persist(Employee employee) {
         em.getTransaction().begin();
@@ -95,11 +82,4 @@ public class EmployeeDAO implements Closeable {
         Query query = em.createNamedQuery("FIND_MAX_SALARY");
         return (Double) query.getSingleResult();
     }
-    
-    @Override
-    public void close() throws IOException {
-        em.close();
-        emfactory.close();
-    }
-
 }

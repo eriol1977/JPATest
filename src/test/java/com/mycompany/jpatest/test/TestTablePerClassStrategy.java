@@ -5,9 +5,9 @@
  */
 package com.mycompany.jpatest.test;
 
-import com.mycompany.jpatest.entity.singletable.NonTeachingStaff;
-import com.mycompany.jpatest.entity.singletable.TeachingStaff;
-import com.mycompany.jpatest.service.StaffDAO;
+import com.mycompany.jpatest.entity.tableperclass.Dragon;
+import com.mycompany.jpatest.entity.tableperclass.Troll;
+import com.mycompany.jpatest.service.MonsterDAO;
 import java.io.IOException;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -24,13 +24,13 @@ import org.junit.Test;
  *
  * @author f.bertolino
  */
-public class TestSingleTableStrategy {
+public class TestTablePerClassStrategy {
 
-    private static StaffDAO dao;
+    private static MonsterDAO dao;
 
     @BeforeClass
     public static void setUp() {
-        dao = new StaffDAO();
+        dao = new MonsterDAO();
     }
 
     @AfterClass
@@ -44,19 +44,16 @@ public class TestSingleTableStrategy {
     }
 
     @Test
-    public void testCreateTable() throws SQLException {
-        TeachingStaff ts1 = new TeachingStaff("Gopal", "MSc MEd", "Maths");
-        TeachingStaff ts2 = new TeachingStaff("Manisha", "BSc BEd", "English");
+    public void testCreateTables() throws SQLException {
+        Troll troll1 = new Troll(2, "Bungo", 300);
+        Troll troll2 = new Troll(4, "Bark", 450);
+        Dragon dragon1 = new Dragon(2170, "Eredin", 1200);
+        Dragon dragon2 = new Dragon(3400, "Astaroth", 2700);
 
-        //Non-Teaching Staff entity
-        NonTeachingStaff nts1 = new NonTeachingStaff("Satish", "Accounts");
-        NonTeachingStaff nts2 = new NonTeachingStaff("Krishna", "Office Admin");
-
-        //storing all entities
-        dao.persist(ts1);
-        dao.persist(ts2);
-        dao.persist(nts1);
-        dao.persist(nts2);
+        dao.persist(troll1);
+        dao.persist(troll2);
+        dao.persist(dragon1);
+        dao.persist(dragon2);
 
         List<String> tableNames = new ArrayList<>();
         final DatabaseMetaData metadata = dao.getDBMetaData();
@@ -64,8 +61,8 @@ public class TestSingleTableStrategy {
         while (rs.next()) {
             tableNames.add(rs.getString(3).toLowerCase());
         }
-        Assert.assertTrue(tableNames.contains("staff"));
-        Assert.assertFalse(tableNames.contains("teachingstaff"));
-        Assert.assertFalse(tableNames.contains("nonteachingstaff"));
+        Assert.assertFalse(tableNames.contains("monster"));
+        Assert.assertTrue(tableNames.contains("troll"));
+        Assert.assertTrue(tableNames.contains("dragon"));
     }
 }

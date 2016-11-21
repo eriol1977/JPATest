@@ -5,25 +5,25 @@
  */
 package com.mycompany.jpatest.service;
 
-import com.mycompany.jpatest.entity.singletable.Staff;
+import com.mycompany.jpatest.entity.joinedtable.Vehicle;
 import javax.persistence.Query;
 
 /**
  *
  * @author f.bertolino
  */
-public class StaffDAO extends AbstractDAO {
+public class VehicleDAO extends AbstractDAO {
 
-    public int persist(Staff staff) {
+    public int persist(Vehicle vehicle) {
         em.getTransaction().begin();
-        em.persist(staff);
+        em.persist(vehicle);
         em.getTransaction().commit();
-        return staff.getSid();
+        return vehicle.getId();
     }
 
     public void deleteAll() {
         em.getTransaction().begin();
-        final Query query = em.createNamedQuery("DELETE_ALL_STAFF");
+        final Query query = em.createNamedQuery("DELETE_ALL_VEHICLE");
         query.executeUpdate();
         em.getTransaction().commit();
     }

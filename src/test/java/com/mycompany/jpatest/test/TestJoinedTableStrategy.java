@@ -5,9 +5,9 @@
  */
 package com.mycompany.jpatest.test;
 
-import com.mycompany.jpatest.entity.singletable.NonTeachingStaff;
-import com.mycompany.jpatest.entity.singletable.TeachingStaff;
-import com.mycompany.jpatest.service.StaffDAO;
+import com.mycompany.jpatest.entity.joinedtable.Bicycle;
+import com.mycompany.jpatest.entity.joinedtable.Car;
+import com.mycompany.jpatest.service.VehicleDAO;
 import java.io.IOException;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -24,13 +24,13 @@ import org.junit.Test;
  *
  * @author f.bertolino
  */
-public class TestSingleTableStrategy {
+public class TestJoinedTableStrategy {
 
-    private static StaffDAO dao;
+    private static VehicleDAO dao;
 
     @BeforeClass
     public static void setUp() {
-        dao = new StaffDAO();
+        dao = new VehicleDAO();
     }
 
     @AfterClass
@@ -44,19 +44,16 @@ public class TestSingleTableStrategy {
     }
 
     @Test
-    public void testCreateTable() throws SQLException {
-        TeachingStaff ts1 = new TeachingStaff("Gopal", "MSc MEd", "Maths");
-        TeachingStaff ts2 = new TeachingStaff("Manisha", "BSc BEd", "English");
-
-        //Non-Teaching Staff entity
-        NonTeachingStaff nts1 = new NonTeachingStaff("Satish", "Accounts");
-        NonTeachingStaff nts2 = new NonTeachingStaff("Krishna", "Office Admin");
-
-        //storing all entities
-        dao.persist(ts1);
-        dao.persist(ts2);
-        dao.persist(nts1);
-        dao.persist(nts2);
+    public void testCreateTables() throws SQLException {
+        Car car1 = new Car("1234", "Ferrari");
+        Car car2 = new Car("9876", "Peugeot");
+        Bicycle bicycle1 = new Bicycle(15, "XYZ");
+        Bicycle bicycle2 = new Bicycle(30, "WWA");
+        
+        dao.persist(car1);
+        dao.persist(car2);
+        dao.persist(bicycle1);
+        dao.persist(bicycle2);
 
         List<String> tableNames = new ArrayList<>();
         final DatabaseMetaData metadata = dao.getDBMetaData();
@@ -64,8 +61,8 @@ public class TestSingleTableStrategy {
         while (rs.next()) {
             tableNames.add(rs.getString(3).toLowerCase());
         }
-        Assert.assertTrue(tableNames.contains("staff"));
-        Assert.assertFalse(tableNames.contains("teachingstaff"));
-        Assert.assertFalse(tableNames.contains("nonteachingstaff"));
+        Assert.assertTrue(tableNames.contains("vehicle"));
+        Assert.assertTrue(tableNames.contains("car"));
+        Assert.assertTrue(tableNames.contains("bicycle"));
     }
 }

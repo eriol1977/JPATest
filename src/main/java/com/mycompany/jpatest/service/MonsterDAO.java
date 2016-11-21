@@ -5,25 +5,25 @@
  */
 package com.mycompany.jpatest.service;
 
-import com.mycompany.jpatest.entity.singletable.Staff;
+import com.mycompany.jpatest.entity.tableperclass.Monster;
 import javax.persistence.Query;
 
 /**
  *
  * @author f.bertolino
  */
-public class StaffDAO extends AbstractDAO {
+public class MonsterDAO extends AbstractDAO {
 
-    public int persist(Staff staff) {
+    public int persist(Monster monster) {
         em.getTransaction().begin();
-        em.persist(staff);
+        em.persist(monster);
         em.getTransaction().commit();
-        return staff.getSid();
+        return monster.getId();
     }
 
     public void deleteAll() {
         em.getTransaction().begin();
-        final Query query = em.createNamedQuery("DELETE_ALL_STAFF");
+        final Query query = em.createNamedQuery("DELETE_ALL_MONSTERS");
         query.executeUpdate();
         em.getTransaction().commit();
     }
