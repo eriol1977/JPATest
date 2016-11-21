@@ -14,7 +14,9 @@ import org.junit.runners.Suite;
     TestEmployee.class,
     TestSingleTableStrategy.class,
     TestJoinedTableStrategy.class,
-    TestTablePerClassStrategy.class
+    TestTablePerClassStrategy.class,
+    TestManyToOne.class,
+    TestOneToMany.class
 })
 
 public class TestSuite {
