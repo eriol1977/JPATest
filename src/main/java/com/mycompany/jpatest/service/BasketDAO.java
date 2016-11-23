@@ -5,8 +5,10 @@
  */
 package com.mycompany.jpatest.service;
 
+import com.mycompany.jpatest.entity.Employee;
 import com.mycompany.jpatest.entity.onetomany.Basket;
 import com.mycompany.jpatest.entity.onetomany.Fruit;
+import java.util.List;
 import javax.persistence.Query;
 
 /**
@@ -31,6 +33,13 @@ public class BasketDAO extends AbstractDAO {
     
     public Basket findBasket(int id) {
         return em.find(Basket.class, id);
+    }
+    
+    public void deleteBasket(Basket basket) {
+        em.getTransaction().begin();
+        Basket persisted = findBasket(basket.getId());
+        em.remove(persisted);
+        em.getTransaction().commit();
     }
     
     public void deleteAll() {

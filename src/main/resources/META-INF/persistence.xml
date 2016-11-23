@@ -16,6 +16,10 @@
     <class>com.mycompany.jpatest.entity.manytoone.Worker</class>
     <class>com.mycompany.jpatest.entity.onetomany.Basket</class>
     <class>com.mycompany.jpatest.entity.onetomany.Fruit</class>
+    <class>com.mycompany.jpatest.entity.onetoone.Weapon</class>
+    <class>com.mycompany.jpatest.entity.onetoone.Bullet</class>
+    <class>com.mycompany.jpatest.entity.manytomany.Clazz</class>
+    <class>com.mycompany.jpatest.entity.manytomany.Teacher</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://HP-188\SQL2016;databaseName=JPA"/>
       <property name="javax.persistence.jdbc.user" value="sa"/>

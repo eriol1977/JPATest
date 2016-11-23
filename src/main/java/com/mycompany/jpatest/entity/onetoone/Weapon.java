@@ -3,38 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.jpatest.entity.onetomany;
+package com.mycompany.jpatest.entity.onetoone;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 
 @Entity
-@NamedQueries({
-    @NamedQuery(query = "Delete from Basket", name = "DELETE_ALL_BASKETS"),
-    @NamedQuery(query = "Select b from Basket b", name = "FIND_ALL_BASKETS"),
-})
-public class Basket implements Serializable {
-
+@NamedQuery(query = "Delete from Weapon",name = "DELETE_ALL_WEAPONS")
+public class Weapon implements Serializable {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-
     private int id;
     private String name;
 
-    @OneToMany(targetEntity = Fruit.class)
-    private List<Fruit> fruitlist;
-
-    public Basket() {
+    public Weapon() {
     }
 
-    public Basket(String name) {
+    public Weapon(String name) {
         this.name = name;
     }
 
@@ -53,12 +43,6 @@ public class Basket implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
-    public List<Fruit> getFruitlist() {
-        return fruitlist;
-    }
-
-    public void setFruitlist(List<Fruit> fruitlist) {
-        this.fruitlist = fruitlist;
-    }
+    
+    
 }

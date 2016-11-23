@@ -73,5 +73,16 @@ public class TestOneToMany {
             tableNames.add(rs.getString(3).toLowerCase());
         }
         Assert.assertTrue(tableNames.contains("basket_fruit"));
+
+        // In a oneToMany relationship, the "many" side (the fruit) cannot be owned by two different objects (the baskets)
+        // Eg: the same banana cannot be placed in two different baskets at the same time!
+        Basket basket2 = new Basket("Basket2");
+        basket2.setFruitlist(fruit);
+        try {
+            dao.persistBasket(basket2);
+            Assert.fail("One to Many should'n let this happen!");
+        } catch (Exception e) {
+            basket2.setFruitlist(null); // necessary for the deleteAll to succeed
+        }
     }
 }
