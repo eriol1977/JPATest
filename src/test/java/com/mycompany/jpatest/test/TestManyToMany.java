@@ -79,6 +79,9 @@ public class TestManyToMany {
         int tid3 = dao.persistTeacher(teacher3);
         
         //Finds classes from teachers
+        // Obs: this is a unidirectional many to many, I cannot find the teachers from the classes!
+        // Many to many just means that the same class may be assigned to more than a teacher at the same time,
+        // unlike one to many, in which, for example, the same banana cannot stay in more than a basket at the same time
         Teacher tfound1 = dao.findTeacher(tid1);
         Teacher tfound2 = dao.findTeacher(tid2);
         Teacher tfound3 = dao.findTeacher(tid3);
